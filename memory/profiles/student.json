@@ -1,0 +1,25 @@
+{
+  "student_name": "demo_student",
+  "preferred_language": "english",
+  "concepts": {
+    "fractions": {
+      "mastery": 0.6,
+      "mistakes": [
+        "i don't understand fraction",
+        "i don't understand fractions"
+      ],
+      "times_seen": 6,
+      "next_review": "2026-06-02"
+    },
+    "general": {
+      "mastery": 0.35,
+      "mistakes": [
+        "i don't understand it",
+        "i am confused again",
+        "i am confused again"
+      ],
+      "times_seen": 5,
+      "next_review": "2026-05-31"
+    }
+  }
+}
