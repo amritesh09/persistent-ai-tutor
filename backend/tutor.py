@@ -2,6 +2,8 @@ from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from groq import Groq
 import os
+import time
+import json
 
 from memory.learner_memory import (
     load_profile,
@@ -84,6 +86,27 @@ def detect_mistake(question):
 
     return None
 
+def log_interaction(
+        question,
+        concept,
+        action,
+        latency
+    ):
+
+    record = {
+        "question": question,
+        "concept": concept,
+        "action": action,
+        "latency": latency
+    }
+
+    with open(
+        "benchmarks/results.jsonl",
+        "a"
+    ) as f:
+        f.write(
+            json.dumps(record) + "\n"
+    )
 
 # -----------------------------
 # MEMORY
@@ -215,6 +238,7 @@ Student Question:
     # LLM CALL
     # -----------------------------
 
+    start = time.time()
     completion = client.chat.completions.create(
         model="llama-3.1-8b-instant",
         messages=[
@@ -223,6 +247,16 @@ Student Question:
                 "content": prompt
             }
         ]
+    )
+    end = time.time()
+
+    latency = round(end - start, 2)
+    print(f"\nLatency: {latency}s")
+    log_interaction(
+        question,
+        concept,
+        action,
+        latency
     )
 
     answer = completion.choices[0].message.content
