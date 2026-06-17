@@ -13,6 +13,10 @@ print("\nAction Distribution")
 print("-------------------")
 print(df.groupby("action").size())
 
+print("\Model Distribution")
+print("-------------------")
+print(df.groupby("model").size())
+
 print("\nAverage Latency")
 print("-------------------")
 print(round(df["latency"].mean(), 2))

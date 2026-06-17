@@ -7,3 +7,7 @@
 {"question": "what are fractions what are fractions", "concept": "fractions", "action": "REVISE", "latency": 0.94}
 {"question": "what are fractions", "concept": "fractions", "action": "REVISE", "latency": 0.3}
 {"question": "what are fractions", "concept": "fractions", "action": "REVISE", "latency": 0.31}
+{"question": "what are fractions ? what are fractions", "concept": "fractions", "action": "REVISE", "latency": 0.73}
+{"question": "what is what is fraction", "action": "REVISE", "model": "small", "latency": 0.67}
+{"question": "what is fraction", "action": "REVISE", "model": "small", "latency": 0.37}
+{"question": "complex fraction", "action": "REVISE", "model": "large", "latency": 0.76}

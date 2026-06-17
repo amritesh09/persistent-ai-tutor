@@ -15,6 +15,8 @@ from planner.planner import (
     next_review_date
 )
 
+from backend.router import choose_model
+
 # -----------------------------
 # GROQ CLIENT
 # -----------------------------
@@ -90,14 +92,15 @@ def log_interaction(
         question,
         concept,
         action,
-        latency
+        latency, 
+        model_used
     ):
 
     record = {
-        "question": question,
-        "concept": concept,
-        "action": action,
-        "latency": latency
+    "question": question,
+    "action": action,
+    "model": model_used,
+    "latency": latency
     }
 
     with open(
@@ -239,8 +242,18 @@ Student Question:
     # -----------------------------
 
     start = time.time()
+
+    model_used = choose_model(
+        question,
+        mastery
+    )
+
+    if model_used == "small":
+        model_name = "llama-3.1-8b-instant"
+    else:
+        model_name = "llama-3.3-70b-versatile"
     completion = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
+        model=model_name,
         messages=[
             {
                 "role": "user",
@@ -256,7 +269,8 @@ Student Question:
         question,
         concept,
         action,
-        latency
+        latency,
+        model_used
     )
 
     answer = completion.choices[0].message.content
@@ -324,6 +338,7 @@ Student Question:
     print("\n[DEBUG]")
     print(f"Concept: {concept}")
     print(f"Mastery: {updated_concept.get('mastery')}")
+    print(f"Model Used: {updated_concept.get('model_used')}")
     print(f"Times Seen: {updated_concept.get('times_seen')}")
     print(f"Action: {action}")
     print(f"Next Review: {updated_concept.get('next_review')}")
